@@ -1,0 +1,16 @@
+<%= form_for(@parking_place.comments.new ,:url =>  parking_places_tution_comment_path(current_user,:picture_id=>@parking_place)) do |f| %>  
+
+   <div class="form-group row">   
+    <label class="control-label col-sm-2 " for="email">Comment:</label>
+    <div clas=" col-sm-10 col-xs-10 col-md-10">
+    <%= f.text_area :comment, :placeholder=> "Enter your comment",:required => true %>
+    </div>
+  </div>
+  <br/>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+
+  <div class="form-group row">
+    <%= f.submit "SUBMIT", class:"btn btn_style_1 col-lg-offset-5  ", style:"width:84px;" %>
+  </div>
+<% end %>
+

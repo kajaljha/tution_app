@@ -8,13 +8,13 @@ defaults: &defaults
   port: 5432
 
 development:
-  database: parking_lot_development
+  database: tution_app_development
   <<: *defaults
 
 test:
-  database: parking_lot_buddy_test
+  database: tution_app_test
   <<: *defaults
 
 production:
-  database: parking_lot_buddy_production
+  database: tution_app_production
   <<: *defaults

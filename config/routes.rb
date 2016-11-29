@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
   devise_for :users, path: "", controllers: { omniauth_callbacks: "omniauth_callbacks" ,registrations: "registrations", sessions: "sessions"}, path_names: { sign_in: 'login', password: 'forgot', sign_up: 'register', sign_out: 'signout'}
   resources :users
-  resources :parking_places
+  resources :parking_places do
+    member do
+      put "like", to: "pictures#upvote"
+      put "dislike", to: "pictures#downvote"
+    end
+  end
 
   get '/auth/:provider/callback', to: 'sessions#create'
   
@@ -18,6 +23,8 @@ Rails.application.routes.draw do
   get 'search_result' => 'parking_places#search_result', as: 'search_result'
 
   get 'my_parking_place' => 'parking_places#my_parking_place', as: 'my_parking_place'
+  post 'parking_places/tution_comment' => 'parking_places#tution_comment'
+  post 'parking_places/tution_comment_index' => 'parking_places#tution_comment_index'
   
   #api routes
   namespace :api do

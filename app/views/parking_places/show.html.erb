@@ -110,6 +110,40 @@
       </p>
     </div>
 
+    <%= link_to like_parking_place_path(@parking_place.id), :title=>"Click to Like picture ",method: :put, id: "test" do %>
+      <i class='glyphicon glyphicon-thumbs-up'></i>
+    <%end%>
+
+   
+
+        <% if @parking_place.comments.present? %>
+      <dt>Comments:</dt>
+      <table class="table-bordered table-condensed">
+        <thead> 
+          <tr >
+            <th><center>Name</center></th>
+            <th><center>Comment</center></th>
+          </tr>
+        </thead>
+        <tbody>
+         <% @parking_place.comments.each do |comment| %>
+            <tr>
+              <td><%= get_commenter_name(comment) if comment.user_id.present? %></td>
+              <td><%=h truncate(comment.comment, :length => 30)%>
+               <% if comment.comment.length > 30 %>
+                  <a data-toggle="collapse" href="#collapse-<%= comment.id%>"><font color="blue">see more</font></a>
+                 <div id="collapse-<%= comment.id%>" class="panel-collapse collapse">
+                 <%= comment.comment %>
+                 </div>
+                <%end%>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <%= render :partial => 'parking_places/tution_comment_form', :locals => {:parking_places => @parking_place } %>
+
     <div class="row">
       <div class="col-md-12 col-sm-12 col-lg-12">
         <% if @parking_place.user == current_user %>

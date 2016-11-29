@@ -25,6 +25,7 @@ gem 'carrierwave'
 gem 'icheck-rails'
 gem "puma_worker_killer"
 gem 'activemerchant'
+gem 'acts_as_votable', '~> 0.10.0'
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'pry'

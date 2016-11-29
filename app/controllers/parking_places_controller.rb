@@ -79,6 +79,33 @@ class ParkingPlacesController < ApplicationController
     @markars = @parking_places.blank? ? [] : @parking_places.map{|p| p.jquery_map_data_as_json }
   end
 
+  def tution_comment
+    picture = ParkingPlace.find(params[:picture_id])
+    @comment = picture.comments.create(comment_params)
+    if @comment.save
+      redirect_to :back, :notice => "Comment Submitted successfully..!"
+    else
+      redirect_to :back
+    end
+  end
+
+  def tution_comment_index
+    @comment_index = Comment.all
+  end
+
+  def upvote
+  @parking_place = ParkingPlace.find(params[:parking_place_id])
+  @parking_place.upvote_by current_user
+  redirect_to :back
+  end  
+
+
+  def downvote
+  @parking_place = ParkingPlace.find(params[:parking_place_id])
+  @parking_place.downvote_by current_user
+  redirect_to :back
+  end
+
   private
 
   def set_parking_place
@@ -88,4 +115,8 @@ class ParkingPlacesController < ApplicationController
   def parking_place_params
     params.require(:parking_place).permit(:id, :user_id, :latitude, :longitude, :street, :city, :state, :zip, :address, :owner_name, :owner_number, :avail_spaces, :total_spaces, :price, :class_name, :subject_name,:yearly_fee, :time_start, :time_end, days_availabilities: [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday])
   end
+
+  def comment_params
+      params.require(:comment).permit(:user_id,:parking_place_id,:comment)
+    end
 end

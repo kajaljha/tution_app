@@ -1,8 +1,9 @@
 class ParkingPlace < ApplicationRecord
   #searchkick
   serialize :days_availabilities, Hash
+  acts_as_votable
 
-
+  has_many :comments
   belongs_to :user
   validates :street, :city, :state, :zip, :address,:time_start, :time_end, presence: true
   validates :city, format: { with: /\A[a-zA-Z\s]+\z/, message: "allows alphabets only" }
